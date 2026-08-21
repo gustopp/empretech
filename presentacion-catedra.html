@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emprendedorismo Tecnológico — Presentación de la Cátedra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito+Sans:opsz,wght@6..12,400;6..12,500;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#2A3A8C;
+  --navy-deep:#141B44;
+  --navy-ink:#1E2757;
+  --blue-light:#A9C9F7;
+  --blue-pale:#EAF1FC;
+  --mint:#A6F3DF;
+  --accent:#0B7A5B;      /* teal oscuro, accesible sobre blanco */
+  --muted:#4E5885;
+  --white:#FFFFFF;
+  --disp:"Baloo 2","Trebuchet MS",sans-serif;
+  --body:"Nunito Sans","Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:#DDE6F7;
+  font-family:var(--body);
+  color:var(--navy-ink);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  overflow:hidden;
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+:focus-visible{outline:3px solid var(--navy); outline-offset:3px}
+
+/* ============ deck shell ============ */
+.deck{
+  position:relative;
+  width:min(96vw, 170.6vh);
+  aspect-ratio:16/9;
+  max-height:92vh;
+  background:var(--white);
+  border-radius:10px;
+  box-shadow:0 30px 70px -20px rgba(20,27,68,.45), 0 0 0 1px rgba(20,27,68,.06);
+  overflow:hidden;
+}
+
+.dots{
+  position:absolute; inset:0;
+  background-image: radial-gradient(circle, rgba(42,58,140,.14) 1.8px, transparent 1.8px);
+  background-size: 28px 28px;
+  pointer-events:none;
+}
+
+/* ============ slides ============ */
+.slide{
+  position:absolute; inset:0;
+  display:none;
+  flex-direction:column;
+  padding:6% 7.5%;
+  opacity:0;
+}
+.slide.active{
+  display:flex;
+  opacity:1;
+  animation:rise .5s cubic-bezier(.2,.7,.2,1);
+}
+@keyframes rise{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:translateY(0)}}
+
+.eyebrow{
+  font-family:var(--body); font-weight:800; font-size:clamp(13px,1.25vw,16px);
+  letter-spacing:.13em; text-transform:uppercase; color:var(--accent);
+  margin:0 0 .4em;
+}
+h1,h2{font-family:var(--disp); color:var(--navy); margin:0; font-weight:700; letter-spacing:-.01em}
+.slide h2{font-size:clamp(27px,3.3vw,42px); line-height:1.08}
+.slide-body{position:relative; z-index:2; flex:1; display:flex; flex-direction:column; min-height:0}
+
+/* corner motifs -------------------------------------------------- */
+.corner-tl{
+  position:absolute; top:0; left:0; right:0; height:5.5%;
+  background:var(--navy); z-index:1;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 82% 0%, 0 100%);
+}
+.corner-tl::after{
+  content:""; position:absolute; top:0; right:0; width:16%; height:340%;
+  background:var(--blue-light);
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+}
+.corner-br{
+  position:absolute; bottom:0; left:0; right:0; height:6%;
+  background:var(--navy); z-index:1;
+  clip-path: polygon(0 100%, 100% 100%, 100% 0, 18% 100%, 0 0);
+}
+.corner-br::before{
+  content:""; position:absolute; bottom:0; right:0; width:15%; height:300%;
+  background:var(--blue-light);
+  clip-path: polygon(0 100%, 100% 100%, 100% 0);
+}
+.sidebar{
+  position:absolute; top:0; bottom:0; left:0; width:7%;
+  background:var(--blue-light); z-index:1;
+}
+
+.brandmark{
+  position:absolute; right:6%; bottom:3.6%; z-index:3;
+  display:flex; align-items:center; gap:8px; opacity:.7;
+}
+.brandmark svg{width:20px;height:20px}
+.brandmark span{font-family:var(--disp); font-weight:700; font-size:13px; color:var(--navy)}
+.pageflag{
+  position:absolute; left:6%; bottom:3.6%; z-index:3;
+  font-family:var(--body); font-weight:800; font-size:12.5px; letter-spacing:.07em;
+  color:var(--muted); text-transform:uppercase;
+}
+
+/* ============ cover ============ */
+.slide.type-cover{padding-left:12%}
+.slide.type-cover .slide-body{justify-content:center}
+.cover-kicker{display:inline-flex; align-items:center; gap:10px; margin-bottom:22px}
+.cover-kicker svg{width:34px;height:34px}
+.cover-kicker span{font-family:var(--body); font-weight:800; letter-spacing:.16em; text-transform:uppercase; font-size:14px; color:var(--accent)}
+.slide.type-cover h1{font-size:clamp(40px,5.8vw,68px); line-height:1.03; max-width:12ch}
+.slide.type-cover .sub{margin-top:18px; font-size:clamp(16px,1.6vw,21px); color:var(--muted); max-width:38ch; font-weight:700}
+
+/* ============ team ============ */
+.team-grid{display:flex; gap:5%; margin-top:8%; flex-wrap:wrap}
+.team-card{display:flex; align-items:center; gap:22px}
+.avatar{
+  width:96px; height:96px; flex:0 0 auto; background:var(--mint);
+  clip-path: polygon(0 0, 78% 0, 100% 22%, 100% 100%, 0 100%);
+  display:flex; align-items:center; justify-content:center;
+}
+.avatar svg{width:48px;height:48px}
+.team-name{font-family:var(--disp); font-weight:700; font-size:clamp(20px,2.2vw,26px); color:var(--navy); line-height:1.15}
+.team-nick{font-style:italic; color:var(--accent); font-weight:800; margin-top:5px; font-size:16px}
+
+/* ============ generic content slide ============ */
+.slide.type-content{padding-top:9.5%; padding-bottom:11%}
+.slide.type-content .slide-body{gap:20px}
+.lead{font-size:clamp(15px,1.4vw,19px); color:var(--muted); font-weight:800; margin:2px 0 4px}
+
+ul.bullets{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:15px}
+ul.bullets li{
+  position:relative; padding-left:32px; font-size:clamp(15px,1.55vw,19px); line-height:1.5; color:var(--navy-ink); font-weight:600;
+}
+ul.bullets li::before{
+  content:""; position:absolute; left:0; top:.35em; width:15px; height:15px; border-radius:4px;
+  background:var(--mint); border:2.5px solid var(--navy);
+}
+ul.bullets li strong{color:var(--navy); font-weight:800}
+
+/* divider */
+.slide.type-divider .slide-body{justify-content:center}
+.slide.type-divider h2{font-size:clamp(36px,5.2vw,60px)}
+.divider-grid{margin-top:36px; display:grid; grid-template-columns:1fr 1fr; gap:18px 34px}
+.divider-item{display:flex; align-items:baseline; gap:14px}
+.divider-item .num{font-family:var(--disp); font-weight:800; font-size:clamp(22px,2.8vw,32px); color:var(--accent)}
+.divider-item .txt{font-weight:800; color:var(--navy); font-size:clamp(15px,1.5vw,19px)}
+
+/* unit slides */
+.slide.type-unit .unit-row{display:grid; grid-template-columns:auto 1fr; gap:0 5%; align-items:start}
+.unit-tag{font-family:var(--disp); font-weight:800; color:var(--accent); font-size:clamp(50px,7.2vw,92px); line-height:1}
+
+/* metodologia two-col */
+.meta-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px 40px}
+
+/* recorrido -------------------------------------------------------- */
+.stats-strip{display:flex; align-items:center; gap:0; margin:6px 0 8px; flex-wrap:wrap}
+.stat-chip{display:flex; align-items:baseline; gap:8px; padding:0 22px 0 0; margin-right:22px; border-right:2px solid var(--blue-pale)}
+.stat-chip:last-child{border-right:none}
+.stat-num{font-family:var(--disp); font-weight:800; font-size:clamp(24px,2.8vw,34px); color:var(--navy)}
+.stat-label{font-weight:700; color:var(--muted); font-size:clamp(11px,1.05vw,13px); text-transform:uppercase; letter-spacing:.05em}
+
+.track{display:flex; gap:14px; margin-top:14px; flex:1; align-items:stretch}
+.rblock{
+  flex:1; display:flex; flex-direction:column; gap:10px; padding:16px 15px;
+  background:var(--blue-pale); border-radius:12px; border:1.5px solid rgba(42,58,140,.14);
+  position:relative;
+}
+.rblock .rb-eyebrow{font-weight:800; color:var(--accent); font-size:clamp(10.5px,1vw,12.5px); text-transform:uppercase; letter-spacing:.06em}
+.rblock .rb-title{font-family:var(--disp); font-weight:700; color:var(--navy); font-size:clamp(15px,1.5vw,19px); line-height:1.15}
+.rblock .rb-range{font-weight:700; color:var(--muted); font-size:clamp(11px,1.05vw,13px)}
+.rblock .rb-markers{display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; padding-top:8px}
+.marker-pill{
+  background:var(--navy); color:#fff; font-size:clamp(10.5px,1vw,12px); font-weight:800;
+  padding:4px 9px; border-radius:100px; display:inline-flex; align-items:center; gap:4px; white-space:nowrap;
+}
+.rtrack-arrow{display:flex; align-items:center; color:var(--accent); font-weight:900; font-size:22px}
+
+/* condicion */
+.cond-list{display:flex; flex-direction:column; gap:17px; margin-top:6px}
+.cond-item{display:flex; align-items:center; gap:16px}
+.cond-check{
+  flex:0 0 auto; width:38px; height:38px; border-radius:50%;
+  background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-family:var(--disp); font-size:15px;
+}
+.cond-txt{font-size:clamp(15px,1.6vw,19px); font-weight:700; color:var(--navy-ink)}
+.cond-txt b{color:var(--navy)}
+
+/* trabajo integrador */
+.slide.type-feature .slide-body{justify-content:center; max-width:60%}
+.slide.type-feature .tagpill{
+  display:inline-block; margin-top:20px; padding:9px 20px; border-radius:100px;
+  background:var(--navy); color:#fff; font-family:var(--disp); font-weight:700; font-size:15px; letter-spacing:.03em;
+}
+.slide.type-feature p.big{font-size:clamp(17px,2.1vw,25px); color:var(--navy-ink); font-weight:700; line-height:1.5; margin-top:10px}
+.slide.type-feature p.small{font-size:clamp(13px,1.3vw,16px); color:var(--muted); font-weight:700; margin-top:14px}
+
+/* etapas */
+.phase-label{font-family:var(--body); font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:.07em; font-size:clamp(12px,1.15vw,14px); margin:16px 0 12px}
+.phase-label:first-child{margin-top:4px}
+.steps-row{display:flex; align-items:stretch; gap:0; flex-wrap:wrap}
+.step{
+  flex:1 1 140px; display:flex; flex-direction:column; gap:8px; padding:15px 16px;
+  background:var(--blue-pale); border-radius:10px; border:1.5px solid rgba(42,58,140,.14); position:relative;
+}
+.step .n{
+  width:32px; height:32px; border-radius:50%; background:var(--navy); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-family:var(--disp); font-weight:700; font-size:15px;
+}
+.step .t{font-weight:800; color:var(--navy); font-size:clamp(14px,1.3vw,17px); line-height:1.25}
+.step .d{color:var(--muted); font-weight:700; font-size:clamp(12px,1.1vw,14px)}
+.chev{display:flex; align-items:center; padding:0 8px; color:var(--accent); font-size:22px; font-weight:900}
+
+.demoday-card{
+  margin-top:22px; display:flex; align-items:center; gap:22px; padding:22px 26px;
+  background:var(--navy); border-radius:14px; color:#fff;
+}
+.demoday-card svg{width:56px;height:56px; flex:0 0 auto}
+.demoday-card .t{font-family:var(--disp); font-weight:800; font-size:clamp(23px,2.7vw,31px)}
+.demoday-card .d{opacity:.9; font-weight:700; font-size:clamp(13px,1.3vw,16px); margin-top:2px}
+
+/* bibliografia */
+.biblio-block h3{font-family:var(--disp); font-size:clamp(14px,1.3vw,17px); color:var(--accent); margin:0 0 10px; text-transform:uppercase; letter-spacing:.04em}
+.biblio-block ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px}
+.biblio-block li{color:var(--navy-ink); font-weight:700; line-height:1.4; padding-left:16px; position:relative; font-size:clamp(14px,1.3vw,17px)}
+.biblio-block li::before{content:"—"; position:absolute; left:0; color:var(--muted)}
+.biblio-two{display:grid; grid-template-columns:1fr 1fr; gap:0 40px}
+
+/* ============ closing ============ */
+.slide.type-closing{background:var(--navy-deep); align-items:center; justify-content:center; text-align:center}
+.slide.type-closing .slide-body{align-items:center; justify-content:center; gap:26px}
+.thanks{font-family:var(--disp); font-weight:800; color:#fff; font-size:clamp(48px,7.2vw,90px); letter-spacing:.01em}
+.closing-logo{display:flex; flex-direction:column; align-items:center; gap:10px; opacity:.95}
+.closing-logo svg{width:40px;height:40px}
+.closing-logo .word1{color:var(--blue-light); font-weight:700; font-size:16px}
+.closing-logo .word2{color:#fff; font-weight:800; font-size:21px; font-family:var(--disp)}
+.closing-tri{position:absolute; top:0; right:0; width:34%; height:60%; background:var(--navy); opacity:.35; clip-path:polygon(100% 0, 100% 100%, 0 0)}
+
+/* ============ nav controls ============ */
+.controls{
+  position:fixed; left:0; right:0; bottom:18px; z-index:50;
+  display:flex; align-items:center; justify-content:center; gap:16px; font-family:var(--body);
+}
+.ctrl-btn{
+  width:44px; height:44px; border-radius:50%; border:none; cursor:pointer;
+  background:var(--navy); color:#fff; font-size:19px; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 6px 16px -4px rgba(20,27,68,.4); transition:transform .12s ease, background .12s ease;
+}
+.ctrl-btn:hover{background:var(--navy-ink); transform:translateY(-1px)}
+.ctrl-btn:active{transform:translateY(0)}
+.ctrl-btn:disabled{opacity:.35; cursor:default; transform:none}
+.dots-nav{display:flex; gap:6px; align-items:center; background:rgba(255,255,255,.9); backdrop-filter:blur(6px); padding:8px 12px; border-radius:100px; box-shadow:0 6px 16px -4px rgba(20,27,68,.25)}
+.dot{width:7px; height:7px; border-radius:50%; background:#AEBBE0; border:none; cursor:pointer; padding:0; transition:.15s}
+.dot:hover{background:var(--blue-light)}
+.dot.active{background:var(--navy); width:20px; border-radius:5px}
+.counter{
+  font-weight:800; font-size:13px; color:var(--navy-ink); background:rgba(255,255,255,.9); backdrop-filter:blur(6px);
+  padding:9px 14px; border-radius:100px; box-shadow:0 6px 16px -4px rgba(20,27,68,.25); min-width:56px; text-align:center;
+}
+.fs-btn{position:fixed; top:16px; right:16px; z-index:50}
+.fs-btn button{
+  width:40px; height:40px; border-radius:8px; border:none; cursor:pointer; background:rgba(255,255,255,.9);
+  backdrop-filter:blur(6px); box-shadow:0 6px 16px -4px rgba(20,27,68,.25); display:flex; align-items:center; justify-content:center;
+}
+.fs-btn svg{width:18px;height:18px}
+
+/* ============ responsive ============ */
+@media(max-width:760px){
+  .deck{width:98vw; max-height:none; aspect-ratio:9/16; border-radius:6px}
+  .slide{padding:9% 7%}
+  .slide.type-cover{padding-left:9%}
+  .team-grid{flex-direction:column; gap:26px; margin-top:6%}
+  .slide.type-unit .unit-row{grid-template-columns:1fr; gap:8px}
+  .unit-tag{font-size:36px}
+  .biblio-two{grid-template-columns:1fr}
+  .divider-grid{grid-template-columns:1fr}
+  .meta-grid{grid-template-columns:1fr}
+  .steps-row{flex-direction:column}
+  .track{flex-direction:column}
+  .chev,.rtrack-arrow{display:none}
+  .controls{bottom:10px; gap:10px}
+  .slide.type-feature{max-width:100%}
+  .slide.type-feature .slide-body{max-width:100%}
+}
+@media print{
+  body{overflow:visible; background:#fff; height:auto; display:block}
+  .controls,.fs-btn{display:none}
+  .deck{box-shadow:none; border-radius:0; width:100%; max-height:none; position:static}
+  .slide{position:static; display:flex!important; opacity:1!important; page-break-after:always; height:100vh}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="logo-dots" viewBox="0 0 40 40">
+    <circle cx="20" cy="8"  r="3.1" fill="var(--navy)"/>
+    <circle cx="30" cy="14" r="2.4" fill="var(--blue-light)"/>
+    <circle cx="31" cy="26" r="3.1" fill="var(--navy)"/>
+    <circle cx="21" cy="33" r="2.4" fill="var(--blue-light)"/>
+    <circle cx="9"  cy="27" r="3.1" fill="var(--navy)"/>
+    <circle cx="8"  cy="15" r="2.4" fill="var(--blue-light)"/>
+    <circle cx="20" cy="20" r="4"   fill="var(--accent)"/>
+  </symbol>
+  <symbol id="icon-person" viewBox="0 0 40 40">
+    <circle cx="20" cy="15" r="7" fill="var(--navy)"/>
+    <path d="M6 36c1-9 8-14 14-14s13 5 14 14" fill="var(--navy)"/>
+  </symbol>
+  <symbol id="icon-rocket" viewBox="0 0 40 40">
+    <path d="M20 4c6 4 8 12 6 20l-6 6-6-6c-2-8 0-16 6-20z" fill="var(--mint)"/>
+    <circle cx="20" cy="16" r="3" fill="var(--navy)"/>
+    <path d="M14 24l-5 8 8-3M26 24l5 8-8-3" stroke="var(--mint)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+<div class="deck" id="deck">
+
+  <!-- 1 — PORTADA -->
+  <section class="slide type-cover active" data-title="Portada">
+    <div class="dots"></div>
+    <div class="sidebar"></div>
+    <div class="corner-br"></div>
+    <div class="slide-body">
+      <div class="cover-kicker"><svg><use href="#logo-dots"/></svg><span>Cátedra</span></div>
+      <h1>Emprendedorismo<br>Tecnológico</h1>
+      <p class="sub">Licenciatura en Gestión Tecnológica — Facultad de Ciencias Económicas, UNICEN</p>
+    </div>
+  </section>
+
+  <!-- 2 — EQUIPO DOCENTE -->
+  <section class="slide type-cover" data-title="Equipo Docente">
+    <div class="dots"></div>
+    <div class="sidebar"></div>
+    <div class="corner-br"></div>
+    <div class="slide-body">
+      <p class="eyebrow">Quiénes somos</p>
+      <h2>Equipo Docente</h2>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="avatar"><svg><use href="#icon-person"/></svg></div>
+          <div>
+            <div class="team-name">Lic. Fernando<br>Errandosoro</div>
+            <div class="team-nick">"Nato"</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="avatar"><svg><use href="#icon-person"/></svg></div>
+          <div>
+            <div class="team-name">Lic. Gustavo<br>Lagoutte</div>
+            <div class="team-nick">"Gusto"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 — OBJETIVOS -->
+  <section class="slide type-content" data-title="Objetivos">
+    <div class="dots"></div>
+    <div class="corner-tl"></div>
+    <div class="slide-body">
+      <p class="eyebrow">Al terminar la cursada</p>
+      <h2>Objetivos de la Asignatura</h2>
+      <p class="lead">Vas a estar en condiciones de:</p>
+      <ul class="bullets">
+        <li>Fundar y lanzar <strong>—en simulacro—</strong> tu propio emprendimiento tecnológico, trabajando en equipo durante toda la cursada.</li>
+        <li>Validar una propuesta de valor hablando con <strong>clientes y usuarios reales</strong>, no solo imaginando el mercado.</li>
+        <li>Construir un <strong>producto mínimo viable</strong> y mostrarlo ante un jurado en un Demo Day.</li>
+        <li>Comprender la dinámica de los negocios de base tecnológica en entornos de <strong>incertidumbre</strong>.</li>
+        <li>Conocer las herramientas —públicas y privadas— para financiar un emprendimiento con potencial de desarrollo.</li>
+        <li>Identificar oportunidades del <strong>ecosistema emprendedor tecnológico</strong>, incluido el de Tandil.</li>
+      </ul>
+    </div>
+    <div class="brandmark"><svg><use href="#logo-dots"/></svg><span>Emprendedorismo Tecnológico</span></div>
+  </section>
+
+  <!-- 4 — CONTENIDOS (divider) -->
+  <section class="slide type-divider" data-title="Contenidos">
+    <div class="dots"></div>
+    <div class="corner-tl"></div>
+    <div class="corner-br"></div>
+    <div class="slide-body">
+      <p class="eyebrow">Cuatro unidades</p>
+      <h2>Contenidos</h2>
+      <div class="divider-grid">
+        <div class="divider-item"><span class="num">01</span><span class="txt">Condiciones del contexto y ecosistema de innovación</span></div>
+        <div class="divider-item"><span class="num">02</span><span class="txt">Metodología y modelo de negocios para startups</span></div>
+        <div class="divider-item"><span class="num">03</span><span class="txt">Financiamiento para empresas tecnológicas</span></div>
+        <div class="divider-item"><span class="num">04</span><span class="txt">Otros componentes relevantes</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 — UNIDAD 1 -->
+  <section class="slide type-content type-unit" data-title="Unidad 1">
+    <div class="dots"></div>
+    <div class="corner-tl"></div>
+    <div class="slide-body">
+      <p class="eyebrow">Unidad 1</p>
+      <div class="unit-row">
+        <div class="unit-tag">01</div>
+        <div>
+          <h2 style="margin-bottom:16px">Condiciones del contexto y ecosistema de innovación</h2>
+          <ul class="bullets">
+            <li>Características del nuevo entorno digital. Innovación convencional corporativa frente a empresas de base tecnológica. Innovación abierta.</li>
+            <li>El rol de los ecosistemas emprendedores y sus componentes institucionales. Casos Silicon Valley e Israel, comparación con Argentina y con el ecosistema local de Tandil.</li>
+            <li>Tecnologías exponenciales e innovación de modelos de negocios.</li>
+            <li>Qué es un emprendedor de base tecnológica. Startup, spin-off y nuevos modelos de creación de empresas tecnológicas.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="pageflag">Contenidos · 1 de 4</div>
+  </section>
+
+  <!-- 6 — UNIDAD 2 -->
+  <section class="slide type-content type-unit" data-title="Unidad 2">
+    <div class="dots"></div>
+    <div class="corner-tl"></div>
+    <div class="slide-body">
+      <p class="eyebrow">Unidad 2</p>
+      <div class="unit-row">
+        <div class="unit-tag">02</div>
+        <div>
+          <h2 style="margin-bottom:16px">Metodología y modelo de negocios para startups</h2>
+          <ul class="bullets">
+            <li>Descubrimiento de clientes: cómo entrevistar y validar un problema antes de construir una solución.</li>
+            <li>Definición de propuesta de valor y Business Model Canvas como herramienta operativa para modelar el negocio.</li>
+            <li>Dimensionamiento de mercado y Product Market Fit.</li>
+            <li>El Producto Mínimo Viable (MVP) y la experimentación en el mercado. Métricas e indicadores.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="pageflag">Contenidos · 2 de 4</div>
+  </section>
+
+  <!-- 7 — UNIDAD 3 -->
+  <section class="slide type-content type-unit" data-title="Unidad 3">
+    <div class="dots"></div>
+    <div class="corner-tl"></div>
+    <div class="slide-body">
+      <p class="eyebrow">Unidad 3</p>
+      <div class="unit-row">
+        <div class="unit-tag">03</div>
+        <div>
+          <h2 style="margin-bottom:16px">Financiamiento para empresas tecnológicas</h2>
+          <ul class="bullets">
+            <li>Bootstrapping y fuentes de financiamiento de emprendedores.</li>
+            <li>Claves de la industria del Venture Capital. Aspectos esenciales para levantar capital de terceros.</li>
+            <li>Jugadores clave del ecosistema inversor.</li>
+            <li>Cap table, deuda convertible, crowdfunding.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="pageflag">Contenidos · 3 de 4</div>
+  </section>
+
+  <!-- 8 — UNIDAD 4 -->
+  <section class="slide type-content type-unit" data-title="Unidad 4">
+    <div class="dots"></div>
+    <div class="corner-tl"></div>
+    <div class="slide-body">
+      <p class="eyebrow">Unidad 4</p>
+      <div class="unit-row">
+        <div class="unit-tag">04</div>
+        <div>
+          <h2 style="margin-bottom:16px">Otros componentes relevantes</h2>
+          <ul class="bullets">
+            <li>Gestión de talento en etapas tempranas.</li>
+            <li>Marco jurídico y societario en tecnología: qué forma elegir y por qué.</li>
+            <li>Propiedad intelectual: qué protege una patente, el copyright del software y la marca.</li>
+            <li>Storytelling y pitching: cómo se cuenta un proyecto ante potenciales inversores.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="pageflag">Contenidos · 4 de 4</div>
+  </section>
+
+  <!-- 9 — PROPUESTA METODOLÓGICA -->
+  <section class="slide type-content" data-title="Propuesta Metodológica">
+    <div class="dots"></div>
+    <div class="corner-tl"></div>
+    <div class="slide-body">
+      <p class="eyebrow">Cómo se cursa</p>
+      <h2>Propuesta Metodológica</h2>
+      <p class="lead">La materia se aprende haciendo. El aula se usa para trabajar, no para escuchar.</p>
+      <div class="meta-grid">
+        <ul class="bullets">
+          <li>La teoría se resuelve mayormente <strong>fuera del aula</strong>: una lectura o un video corto antes de cada clase.</li>
+          <li>En clase se trabaja en <strong>taller</strong>: se construye, se recibe feedback y se ajusta el rumbo.</li>
+          <li>En grupos, van a desarrollar un <strong>emprendimiento tecnológico real</strong> a lo largo de toda la cursada.</li>
+        </ul>
+        <ul class="bullets">
+          <li>Varios encuentros están dedicados a mostrar avances y recibir devolución de la cátedra.</li>
+          <li><strong>Invitados</strong> del ecosistema emprendedor cuentan su experiencia en distintos momentos.</li>
+          <li>Actividades vivenciales: visitas y reuniones con empresas e instituciones del ecosistema emprendedor tecnológico.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="brandmark"><svg><use href="#logo-dots"/></svg><span>Emprendedorismo Tecnológico</span></div>
+  </section>
+
+  <!-- 10 — RECORRIDO DE LA CURSADA -->
+  <section class="slide type-content" data-title="Recorrido de la Cursada">
+    <div class="dots"></div>
+    <div class="corner-tl"></div>
+    <div class="slide-body">
+      <p class="eyebrow">La forma del cuatrimestre</p>
+      <h2>Recorrido de la Cursada</h2>
+      <div class="stats-strip">
+        <div class="stat-chip"><span class="stat-num">15</span><span class="stat-label">encuentros</span></div>
+        <div class="stat-chip"><span class="stat-num">5</span><span class="stat-label">bloques</span></div>
+        <div class="stat-chip"><span class="stat-num">3</span><span class="stat-label">invitados</span></div>
+        <div class="stat-chip"><span class="stat-num">1</span><span class="stat-label">Demo Day</span></div>
+      </div>
+      <div class="track">
+        <div class="rblock">
+          <div class="rb-eyebrow">Bloque 0</div>
+          <div class="rb-title">Arranque</div>
+          <div class="rb-range">Clases 1–2</div>
+          <div class="rb-markers"><span class="marker-pill">🎤 Invitado</span></div>
+        </div>
+        <div class="rtrack-arrow">›</div>
+        <div class="rblock">
+          <div class="rb-eyebrow">Bloque 1</div>
+          <div class="rb-title">Descubrimiento</div>
+          <div class="rb-range">Clases 3–5</div>
+          <div class="rb-markers"><span class="marker-pill">✅ Devolución</span></div>
+        </div>
+        <div class="rtrack-arrow">›</div>
+        <div class="rblock">
+          <div class="rb-eyebrow">Bloque 2</div>
+          <div class="rb-title">Modelo</div>
+          <div class="rb-range">Clases 6–8</div>
+          <div class="rb-markers"><span class="marker-pill">🎤 Invitado</span><span class="marker-pill">📝 Parcial</span></div>
+        </div>
+        <div class="rtrack-arrow">›</div>
+        <div class="rblock">
+          <div class="rb-eyebrow">Bloque 3</div>
+          <div class="rb-title">Construcción</div>
+          <div class="rb-range">Clases 9–11</div>
+          <div class="rb-markers"><span class="marker-pill">✅ Devolución</span><span class="marker-pill">🎤 Invitado</span></div>
+        </div>
+        <div class="rtrack-arrow">›</div>
+        <div class="rblock">
+          <div class="rb-eyebrow">Bloque 4</div>
+          <div class="rb-title">Salida</div>
+          <div class="rb-range">Clases 12–15</div>
+          <div class="rb-markers"><span class="marker-pill">🏆 Demo Day</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 — CONDICIÓN DE APROBACIÓN -->
+  <section class="slide type-content" data-title="Condición de Aprobación">
+    <div class="dots"></div>
+    <div class="corner-tl"></div>
+    <div class="slide-body">
+      <p class="eyebrow">Para aprobar</p>
+      <h2>Condición de Aprobación</h2>
+      <div class="cond-list">
+        <div class="cond-item"><div class="cond-check">70%</div><div class="cond-txt">Asistir al <b>70% de las clases</b> teóricas.</div></div>
+        <div class="cond-item"><div class="cond-check">✓</div><div class="cond-txt">Aprobar el <b>parcial</b> con nota promedio 6 (seis) o superior.</div></div>
+        <div class="cond-item"><div class="cond-check">✓</div><div class="cond-txt">Aprobar la <b>parte práctica</b> con 6 (seis) o más.</div></div>
+        <div class="cond-item"><div class="cond-check">✓</div><div class="cond-txt">Aprobar la <b>evaluación integradora — el Demo Day</b> — con 6 (seis) o más.</div></div>
+        <div class="cond-item"><div class="cond-check">✓</div><div class="cond-txt">Entregar en tiempo y forma los <b>entregables de avance</b>.</div></div>
+      </div>
+    </div>
+    <div class="brandmark"><svg><use href="#logo-dots"/></svg><span>Emprendedorismo Tecnológico</span></div>
+  </section>
+
+  <!-- 12 — TRABAJO INTEGRADOR -->
+  <section class="slide type-content type-feature" data-title="Trabajo Integrador">
+    <div class="dots"></div>
+    <div class="corner-tl"></div>
+    <div class="slide-body">
+      <p class="eyebrow">La columna vertebral de la cursada</p>
+      <h2 style="font-size:clamp(32px,4.6vw,54px)">Trabajo Integrador</h2>
+      <p class="big">Plantear, desarrollar y presentar ante un jurado un proyecto de innovación tecnológica.</p>
+      <p class="small">Con jurado externo del ecosistema emprendedor local.</p>
+      <span class="tagpill">🚀 Demo Day</span>
+    </div>
+  </section>
+
+  <!-- 13 — INTEGRADOR ETAPAS I -->
+  <section class="slide type-content" data-title="Integrador — Etapas I">
+    <div class="dots"></div>
+    <div class="corner-tl"></div>
+    <div class="slide-body">
+      <p class="eyebrow">Cómo se construye</p>
+      <h2>Integrador — Etapas I</h2>
+      <p class="lead">Antes de construir nada, hablamos con la gente.</p>
+
+      <div class="steps-row" style="margin-top:8px">
+        <div class="step"><div class="n">1</div><div class="t">Elegir un problema</div><div class="d">De un banco de candidatos, en equipo</div></div>
+        <div class="chev">›</div>
+        <div class="step"><div class="n">2</div><div class="t">Validar con clientes reales</div><div class="d">Mínimo diez entrevistas</div></div>
+        <div class="chev">›</div>
+        <div class="step"><div class="n">3</div><div class="t">Definir la propuesta de valor</div><div class="d">Segmento, dolor y solución</div></div>
+      </div>
+    </div>
+    <div class="pageflag">Integrador · 1 de 2</div>
+  </section>
+
+  <!-- 14 — INTEGRADOR ETAPAS II -->
+  <section class="slide type-content" data-title="Integrador — Etapas II">
+    <div class="dots"></div>
+    <div class="corner-tl"></div>
+    <div class="slide-body">
+      <p class="eyebrow">Cómo se construye</p>
+      <h2>Integrador — Etapas II</h2>
+      <p class="lead">Modelamos, construimos y salimos a mostrarlo.</p>
+
+      <div class="steps-row" style="margin-top:8px">
+        <div class="step"><div class="n">4</div><div class="t">Modelar el negocio</div><div class="d">Canvas y modelo de ingresos</div></div>
+        <div class="chev">›</div>
+        <div class="step"><div class="n">5</div><div class="t">Construir el MVP</div><div class="d">Mockup o producto funcional</div></div>
+        <div class="chev">›</div>
+        <div class="step"><div class="n">6</div><div class="t">Buscar financiamiento</div><div class="d">De bootstrapping a inversión</div></div>
+        <div class="chev">›</div>
+        <div class="step"><div class="n">7</div><div class="t">Contarlo</div><div class="d">Storytelling y pitch</div></div>
+      </div>
+
+      <div class="demoday-card">
+        <svg><use href="#icon-rocket"/></svg>
+        <div>
+          <div class="t">¡Demo Day!</div>
+          <div class="d">Mostrarlo al mundo</div>
+        </div>
+      </div>
+    </div>
+    <div class="pageflag">Integrador · 2 de 2</div>
+  </section>
+
+  <!-- 15 — BIBLIOGRAFÍA I -->
+  <section class="slide type-content" data-title="Bibliografía — Obligatoria">
+    <div class="dots"></div>
+    <div class="corner-tl"></div>
+    <div class="slide-body">
+      <p class="eyebrow">Para leer</p>
+      <h2 style="margin-bottom:14px">Bibliografía</h2>
+      <div class="biblio-two">
+        <div class="biblio-block">
+          <h3>Obligatoria</h3>
+          <ul>
+            <li>Rob Fitzpatrick — <em>The Mom Test</em> (2013)</li>
+            <li>Osterwalder, Pigneur, Bernarda y Smith — <em>Value Proposition Design</em> (2014)</li>
+            <li>David Bland y Alexander Osterwalder — <em>Testing Business Ideas</em> (2019)</li>
+            <li>Eric Ries — <em>El método Lean Startup</em> (2012). Caps. 2, 4 y 7</li>
+          </ul>
+        </div>
+        <div class="biblio-block">
+          <h3>Complementaria</h3>
+          <ul>
+            <li>Scott Kupor — <em>Secrets of Sand Hill Road</em> (2019)</li>
+            <li>Osterwalder y Pigneur — <em>Business Model Generation</em> (2013)</li>
+            <li>Steve Blank — <em>The Startup Owner's Manual</em></li>
+            <li>Henry Chesbrough — <em>Open Innovation</em> (2003)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="pageflag">Bibliografía · 1 de 2</div>
+  </section>
+
+  <!-- 16 — BIBLIOGRAFÍA II -->
+  <section class="slide type-content" data-title="Bibliografía — Casos y recursos">
+    <div class="dots"></div>
+    <div class="corner-tl"></div>
+    <div class="slide-body">
+      <p class="eyebrow">Para leer</p>
+      <h2 style="margin-bottom:14px">Bibliografía</h2>
+      <div class="biblio-two">
+        <div class="biblio-block">
+          <h3>Casos de negocio</h3>
+          <ul>
+            <li>"The Rise of Mercado Libre" y casos de startups argentinas</li>
+          </ul>
+        </div>
+        <div class="biblio-block">
+          <h3>Contenido digital</h3>
+          <ul>
+            <li>Y Combinator — Startup School (youtube.com)</li>
+            <li>ted.com</li>
+            <li>ARCAP + EY — <em>Panorama del Capital Emprendedor en Argentina 2026</em></li>
+            <li>unicenvirtual.edu.ar</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="pageflag">Bibliografía · 2 de 2</div>
+  </section>
+
+  <!-- 17 — GRACIAS -->
+  <section class="slide type-closing" data-title="Gracias">
+    <div class="closing-tri"></div>
+    <div class="slide-body">
+      <div class="thanks">¡GRACIAS!</div>
+      <div class="closing-logo">
+        <svg><use href="#logo-dots"/></svg>
+        <div class="word1">Emprendedorismo</div>
+        <div class="word2">Tecnológico</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="fs-btn"><button id="fsToggle" aria-label="Pantalla completa" title="Pantalla completa">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#2A3A8C" stroke-width="2" stroke-linecap="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/></svg>
+</button></div>
+
+<nav class="controls">
+  <button class="ctrl-btn" id="prevBtn" aria-label="Anterior">‹</button>
+  <div class="dots-nav" id="dotsNav"></div>
+  <div class="counter" id="counter">1 / 17</div>
+  <button class="ctrl-btn" id="nextBtn" aria-label="Siguiente">›</button>
+</nav>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total = slides.length;
+let idx = 0;
+
+const dotsNav = document.getElementById('dotsNav');
+slides.forEach((s,i)=>{
+  const d = document.createElement('button');
+  d.className = 'dot' + (i===0?' active':'');
+  d.setAttribute('aria-label', 'Ir a: ' + s.dataset.title);
+  d.title = s.dataset.title;
+  d.addEventListener('click', ()=>go(i));
+  dotsNav.appendChild(d);
+});
+const dots = Array.from(dotsNav.children);
+const counter = document.getElementById('counter');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+function go(n){
+  n = Math.max(0, Math.min(total-1, n));
+  slides[idx].classList.remove('active');
+  dots[idx].classList.remove('active');
+  idx = n;
+  slides[idx].classList.add('active');
+  dots[idx].classList.add('active');
+  counter.textContent = (idx+1) + ' / ' + total;
+  prevBtn.disabled = idx===0;
+  nextBtn.disabled = idx===total-1;
+}
+prevBtn.addEventListener('click', ()=>go(idx-1));
+nextBtn.addEventListener('click', ()=>go(idx+1));
+
+document.addEventListener('keydown', e=>{
+  if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){ e.preventDefault(); go(idx+1); }
+  else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); go(idx-1); }
+  else if(e.key==='Home'){ e.preventDefault(); go(0); }
+  else if(e.key==='End'){ e.preventDefault(); go(total-1); }
+});
+
+let touchX = null;
+document.addEventListener('touchstart', e=>{ touchX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  if(touchX===null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  if(Math.abs(dx) > 50){ dx < 0 ? go(idx+1) : go(idx-1); }
+  touchX = null;
+}, {passive:true});
+
+document.getElementById('fsToggle').addEventListener('click', ()=>{
+  if(!document.fullscreenElement){ document.documentElement.requestFullscreen?.(); }
+  else{ document.exitFullscreen?.(); }
+});
+
+go(0);
+</script>
+</body>
+</html>
